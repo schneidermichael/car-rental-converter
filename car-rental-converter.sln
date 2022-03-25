@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "car-rental-converter", "car-rental-converter\car-rental-converter.csproj", "{8D05A1AF-D7E2-4170-B8A8-FBBE086BC68C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "car-rental-converter-testing", "car-rental-converter-testing\car-rental-converter-testing.csproj", "{1F1E6A08-2395-4E36-AA4D-47A88F3EB702}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8D05A1AF-D7E2-4170-B8A8-FBBE086BC68C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D05A1AF-D7E2-4170-B8A8-FBBE086BC68C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D05A1AF-D7E2-4170-B8A8-FBBE086BC68C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1E6A08-2395-4E36-AA4D-47A88F3EB702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1E6A08-2395-4E36-AA4D-47A88F3EB702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1E6A08-2395-4E36-AA4D-47A88F3EB702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1E6A08-2395-4E36-AA4D-47A88F3EB702}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
