@@ -39,7 +39,7 @@ namespace car_rental_converter_testing
         }
 
         [Fact]
-        public async Task CalculatingCrossCurrency()
+        public async Task CalculatingCrossCurrencyTest()
         {
             //Arrange
             var service = new CurrencyConverterImpl();
@@ -55,6 +55,23 @@ namespace car_rental_converter_testing
             //Assert
             Assert.Equal("JPY", response.Symbol);
 
+        }
+        [Fact]
+        public async Task LoginTest()
+        {
+            //Arrange
+            var service = new CurrencyConverterImpl();
+
+            //act
+            var response = await service.Login(new LoginRequest
+            {
+                Username = "group1",
+                Password = "car"
+
+            }, TestServerCallContext.Create());
+
+            //Assert
+            Assert.NotNull(response.Token);
         }
     }
 }
