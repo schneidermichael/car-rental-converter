@@ -1,4 +1,6 @@
-﻿using GrpcCurrencyConverter;
+﻿using car_rental_converter.Utility;
+using Grpc.Core;
+using GrpcCurrencyConverter;
 using System.Xml;
 
 namespace grpc_currency_converter.Utility
@@ -6,7 +8,6 @@ namespace grpc_currency_converter.Utility
     public class CurrencyConverterUtility
     {
         private const string EURO_SYMBOL = "EUR";
-        private const string XML_TAG_CUBE = "Cube";
         private const string XML_ATTRIBUTE_CURRENCY = "currency";
         private const string XML_ATTRIBUTE_RATE = "rate";
         private const string HTTPS = "https://";
@@ -16,22 +17,19 @@ namespace grpc_currency_converter.Utility
         {
 
         }
+
         // Load the List of available Currencies from the European Central Bank
         public static ListOfCurrenciesResponse GetListOfCurrenciesResponse()
         {
-
             ListOfCurrenciesResponse listOfCurrencies = new();
 
             XmlReader xmlReader = XmlReader.Create(HTTPS + URL);
 
             while (xmlReader.Read())
             {
-                if ((xmlReader.NodeType == XmlNodeType.Element) && (xmlReader.Name == XML_TAG_CUBE))
+                if (xmlReader.GetAttribute(XML_ATTRIBUTE_CURRENCY) != null)
                 {
-                    if (!xmlReader.HasAttributes || xmlReader.GetAttribute(XML_ATTRIBUTE_CURRENCY) == null || xmlReader.GetAttribute(XML_ATTRIBUTE_RATE) == null)
-                    {
-                        continue;
-                    }
+
                     Currency currencyItem = new()
                     {
                         Symbol = xmlReader.GetAttribute(XML_ATTRIBUTE_CURRENCY),
@@ -41,58 +39,61 @@ namespace grpc_currency_converter.Utility
                     listOfCurrencies.Currencies.Add(currencyItem);
                 }
             }
+
+            listOfCurrencies.Currencies.Add(Euro());
+
             return listOfCurrencies;
         }
 
         // Select one specific currency from the list of currencies
         public static CurrencyPerSymbolResponse GetCurrencyPerSymbol(string symbol)
         {
+            CurrencyConverterException.CheckSymbol(symbol);
 
             CurrencyPerSymbolResponse response = new();
 
             ListOfCurrenciesResponse listOfCurrencies = GetListOfCurrenciesResponse();
 
-            var result = listOfCurrencies.Currencies.Single(currency => currency.Symbol == symbol);
-
-            response.Curreny = result;
+            response.Curreny = CurrencyConverterException.CheckList(listOfCurrencies, symbol);
 
             return response;
-
         }
 
         //Calculating from currency X to currency Y
         public static CalculatingCrossCurrencyResponse GetCalculatingCrossCurrency(CalculatingCrossCurrencyRequest request)
         {
+            CurrencyConverterException.CheckAmount(request.Amount);
+
             CalculatingCrossCurrencyResponse respone = new();
+
+            CurrencyPerSymbolResponse currencyInput = GetCurrencyPerSymbol(request.SymbolInput);
+            CurrencyPerSymbolResponse currencyOutput = GetCurrencyPerSymbol(request.SymbolOutput);
 
             respone.Symbol = request.SymbolOutput;
 
             if (request.SymbolInput == EURO_SYMBOL)
             {
-                CurrencyPerSymbolResponse output = GetCurrencyPerSymbol(request.SymbolOutput);
-
-                respone.Result = output.Curreny.Rate * request.Amount;
-
-                return respone;
-
+                respone.Result = currencyOutput.Curreny.Rate * request.Amount;
             }
             else if (request.SymbolOutput == EURO_SYMBOL)
             {
-                CurrencyPerSymbolResponse input = GetCurrencyPerSymbol(request.SymbolInput);
-
-                respone.Result = (1 / input.Curreny.Rate) * request.Amount;
-
-                return respone;
-
+                respone.Result = (1 / currencyInput.Curreny.Rate) * request.Amount;
             }
-
-            CurrencyPerSymbolResponse currencyInput = GetCurrencyPerSymbol(request.SymbolInput);
-
-            CurrencyPerSymbolResponse currencyOutput = GetCurrencyPerSymbol(request.SymbolOutput);
-
-            respone.Result = (currencyOutput.Curreny.Rate / currencyInput.Curreny.Rate) * request.Amount;
+            else
+            {
+                respone.Result = (currencyOutput.Curreny.Rate / currencyInput.Curreny.Rate) * request.Amount;
+            }
 
             return respone;
         }
+
+        private static Currency Euro()
+        {
+            Currency euro = new();
+            euro.Symbol = "EUR";
+
+            return euro;
+        }
+
     }
 }
