@@ -11,6 +11,9 @@ package currencyconverter;
 // The Currency Converter service definition
 service CurrencyConverter {
 
+  // Get Bearer Token for ListOfCurrencies, CurrencyPerSymbol and CalculatingCrossCurrency
+  rpc Login (LoginRequest) returns (LoginResponse);	
+
   // Get a List of available currencies
   rpc ListOfCurrencies (google.protobuf.Empty) returns (ListOfCurrenciesResponse);
 
@@ -53,4 +56,15 @@ message CalculatingCrossCurrencyRequest {
 message CalculatingCrossCurrencyResponse {
 	string symbol = 1;
 	double result = 2;
+}
+
+// The LoginRequest message contains the Credentials
+message LoginRequest {
+	string username = 1;
+	string password = 2;
+}
+
+// The LoginResponse message containing the Bearer Token
+message LoginResponse {
+	string token = 1;
 }
