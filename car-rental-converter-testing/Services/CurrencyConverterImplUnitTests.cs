@@ -20,7 +20,7 @@ namespace car_rental_converter_testing
             var response = await service.ListOfCurrencies(new Empty(), TestServerCallContext.Create());
 
             //Assert
-            Assert.Equal(31, response.Currencies.Count);
+            Assert.Equal(32, response.Currencies.Count);
         }
 
         [Fact]
