@@ -75,22 +75,24 @@ namespace grpc_currency_converter.Utility
 
             CalculatingCrossCurrencyResponse respone = new();
 
-            CurrencyPerSymbolResponse currencyInput = GetCurrencyPerSymbol(request.SymbolInput);
-            CurrencyPerSymbolResponse currencyOutput = GetCurrencyPerSymbol(request.SymbolOutput);
+            ListOfCurrenciesResponse listOfCurrencies = GetListOfCurrenciesResponse();
+
+            Currency currencyInput = listOfCurrencies.Currencies.Single(currency => currency.Symbol == request.SymbolInput);
+            Currency currencyOutput = listOfCurrencies.Currencies.Single(currency => currency.Symbol == request.SymbolOutput);
 
             respone.Symbol = request.SymbolOutput;
 
             if (request.SymbolInput == EURO_SYMBOL)
             {
-                respone.Result = currencyOutput.Curreny.Rate * request.Amount;
+                respone.Result = currencyOutput.Rate * request.Amount;
             }
             else if (request.SymbolOutput == EURO_SYMBOL)
             {
-                respone.Result = (1 / currencyInput.Curreny.Rate) * request.Amount;
+                respone.Result = (1 / currencyInput.Rate) * request.Amount;
             }
             else
             {
-                respone.Result = (currencyOutput.Curreny.Rate / currencyInput.Curreny.Rate) * request.Amount;
+                respone.Result = (currencyOutput.Rate / currencyInput.Rate) * request.Amount;
             }
 
             return respone;
