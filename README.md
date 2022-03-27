@@ -1,4 +1,5 @@
-# car-rental-converter
+[![.NET](https://github.com/schneidermichael/car-rental-converter/actions/workflows/dotnet.yml/badge.svg)](https://github.com/schneidermichael/car-rental-converter/actions/workflows/dotnet.yml)
+![GitHub](https://img.shields.io/github/license/schneidermichael/car-rental-converter?style=flat-square)
 
 ## Getting Started
 
