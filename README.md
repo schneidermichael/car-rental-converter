@@ -3,24 +3,40 @@
 ## Getting Started
 
 1. `git clone https://github.com/schneidermichael/car-rental-converter.git` 
-2. `docker pull michaelxschneider/carrentalconverter:latest`
-3. `docker run --name car-rental-converter -d -p 49174:80 michaelxschneider/carrentalconverter:latest`
+2. `docker pull michaelxschneider/carrentalconverter:0.0.1`
+3. `docker run --name car-rental-converter -d -p 49174:80 michaelxschneider/carrentalconverter:0.0.1`
 4. Open [Postman](https://www.postman.com/downloads/)
 5. Go to **New**
 6. Select **gRPC Requeest**
 7. Enter server URL -> `localhost:49174` or `0.0.0.0:49174` (depends on OS and your individuel Host configuration)
 8. Choose a way to load services and methods -> More ways to load services and methods -> Import protobuf definition from file -> Choose File -> `car-rental-converter/Protos/currency_converter_service.proto` -> Next -> Use without importing
-9.  Select a method -> CurrencyConverter/ListOfCurrencies
-10. Invoke -> works only if Container is RUNNING :) 
+9.  Select a method -> CurrencyConverter/Login
+10. Use input from Login 
+11. Invoke -> works only if Container is RUNNING :) 
 
 ## Methods
 
-* ListOfCurrencies
-* CurrencyPerSymbol
-* CalculatingCrossCurrency
+* Login
+* ListOfCurrencies *(Authorization-Bearer Token)*
+* CurrencyPerSymbol *(Authorization-Bearer Token)*
+* CalculatingCrossCurrency *(Authorization-Bearer Token)*
 
-## Example Request/Response (use in Postman)
+## Examples for Request/Response
 
+### Login
+
+#### Input
+
+`{
+    "password": "car",
+    "username": "group1"
+}`
+
+#### Output
+
+`{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZ3JvdXAxIiwiZXhwIjoxNjQ4Mzc3OTAyLCJpc3MiOiJjYXItcmVudGFsLWNvbnZlcnRlciIsImF1ZCI6ImNhci1yZW50YWwtYXBwIn0.ts__XgMgDB8DETbvVKMfFc4LhP6Sc_pXIhvp6k08CZw"
+}`
 ### ListOfCurrencies
 
 #### Input
