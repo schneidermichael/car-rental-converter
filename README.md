@@ -1,5 +1,5 @@
 [![.NET](https://github.com/schneidermichael/car-rental-converter/actions/workflows/dotnet.yml/badge.svg)](https://github.com/schneidermichael/car-rental-converter/actions/workflows/dotnet.yml)
-![GitHub](https://img.shields.io/github/license/schneidermichael/car-rental-converter?style=flat-square)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Getting Started
 
