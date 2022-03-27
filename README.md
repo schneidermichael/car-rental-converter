@@ -3,8 +3,8 @@
 ## Getting Started
 
 1. `git clone https://github.com/schneidermichael/car-rental-converter.git` 
-2. `docker pull michaelxschneider/carrentalconverter:0.0.1`
-3. `docker run --name car-rental-converter -d -p 49174:80 michaelxschneider/carrentalconverter:0.0.1`
+2. `docker pull michaelxschneider/carrentalconverter:0.0.2`
+3. `docker run --name car-rental-converter -d -p 49174:80 michaelxschneider/carrentalconverter:0.0.2`
 4. Open [Postman](https://www.postman.com/downloads/)
 5. Go to **New**
 6. Select **gRPC Requeest**
@@ -37,7 +37,7 @@
 `{
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZ3JvdXAxIiwiZXhwIjoxNjQ4Mzc3OTAyLCJpc3MiOiJjYXItcmVudGFsLWNvbnZlcnRlciIsImF1ZCI6ImNhci1yZW50YWwtYXBwIn0.ts__XgMgDB8DETbvVKMfFc4LhP6Sc_pXIhvp6k08CZw"
 }`
-### ListOfCurrencies
+### ListOfCurrencies *(Authorization-Bearer Token)*
 
 #### Input
 
@@ -174,7 +174,7 @@
     ]
 }`
 
-### CurrencyPerSymbol
+### CurrencyPerSymbol *(Authorization-Bearer Token)*
 
 #### Input
 
@@ -191,7 +191,7 @@
     }
 }`
 
-### CalculatingCrossCurrency
+### CalculatingCrossCurrency *(Authorization-Bearer Token)*
 
 #### Input
 
@@ -207,3 +207,4 @@
     "symbol": "USD",
     "result": 1.1002
 }`
+
