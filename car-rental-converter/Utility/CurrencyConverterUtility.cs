@@ -1,6 +1,9 @@
 ﻿using car_rental_converter.Utility;
 using Grpc.Core;
 using GrpcCurrencyConverter;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Xml;
 
 namespace grpc_currency_converter.Utility
@@ -12,10 +15,16 @@ namespace grpc_currency_converter.Utility
         private const string XML_ATTRIBUTE_RATE = "rate";
         private const string HTTPS = "https://";
         private const string URL = "www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
+        // TODO: Hardcoded Username + Password not perfect -> better use appsettings.json
+        private const string USERNAME = "group1";
+        private const string PASSWORD = "car";
 
-        private CurrencyConverterUtility()
+        private static readonly JwtSecurityTokenHandler JwtTokenHandler = new();
+        public static readonly SymmetricSecurityKey SecurityKey = new(Guid.NewGuid().ToByteArray());
+        
+        protected CurrencyConverterUtility()
         {
-
+       
         }
 
         // Load the List of available Currencies from the European Central Bank
@@ -85,6 +94,22 @@ namespace grpc_currency_converter.Utility
             }
 
             return respone;
+        }
+
+        public static LoginResponse GetLogin(LoginRequest request)
+        {
+            LoginResponse respone = new();
+
+            if(request.Username == USERNAME && request.Password == PASSWORD)
+            {
+                var claims = new[] { new Claim(ClaimTypes.Name, USERNAME) };
+                var credentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken("car-rental-converter", "car-rental-app", claims, expires: DateTime.Now.AddMinutes(30), signingCredentials: credentials);
+                respone.Token = JwtTokenHandler.WriteToken(token);
+                return respone;
+            }
+
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Username or Password is incorrect"));
         }
 
         private static Currency Euro()
