@@ -118,6 +118,7 @@ namespace grpc_currency_converter.Utility
         {
             Currency euro = new();
             euro.Symbol = "EUR";
+            euro.Rate = 1.00;
 
             return euro;
         }
