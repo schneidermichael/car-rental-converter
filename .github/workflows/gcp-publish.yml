@@ -1,0 +1,35 @@
+name: Docker
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  publish:
+    name: 'Build and Push Docker Image'
+    runs-on: 'ubuntu-latest'
+    env:
+      IMAGE_NAME: us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcr.io/${{ secrets.GCP_APP_NAME }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v3
+
+      - name: 'Authenticate'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: 'Setup up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+
+      - name: 'Configure Docker'
+        run: gcloud auth configure-docker us-docker.pkg.dev --quiet
+
+      - name: 'Build Docker image'
+        run: docker build . -t $IMAGE_NAME
+
+      - name: 'Push Docker image'
+        run: docker push $IMAGE_NAME
+
+#      - name: Deploy Docker image
+#        run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region europe-west1-b --platform managed
