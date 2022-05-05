@@ -4,8 +4,8 @@
 ## Getting Started
 
 1. `git clone https://github.com/schneidermichael/car-rental-converter.git` 
-2. `docker pull michaelxschneider/carrentalconverter:0.0.2`
-3. `docker run --name car-rental-converter -d -p 49174:80 michaelxschneider/carrentalconverter:0.0.2`
+2. `docker pull michaelxschneider/carrentalconverter:0.0.3`
+3. `docker run --name car-rental-converter -d -p 49174:80 michaelxschneider/carrentalconverter:0.0.3`
 4. Open [Postman](https://www.postman.com/downloads/)
 5. Go to **New**
 6. Select **gRPC Requeest**
