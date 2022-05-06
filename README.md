@@ -1,6 +1,6 @@
 [![.NET](https://github.com/schneidermichael/car-rental-converter/actions/workflows/dotnet.yml/badge.svg)](https://github.com/schneidermichael/car-rental-converter/actions/workflows/dotnet.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+[![codecov](https://codecov.io/gh/schneidermichael/car-rental-converter/branch/master/graph/badge.svg?token=ACQDGY3BR2)](https://codecov.io/gh/schneidermichael/car-rental-converter)
 ## Getting Started
 
 1. `git clone https://github.com/schneidermichael/car-rental-converter.git` 
